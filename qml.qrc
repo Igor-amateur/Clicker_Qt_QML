@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>Background.qml</file>
+        <file>Clicker.qml</file>
+        <file>Images/clickhand.png</file>
+        <file>Images/egg.png</file>
+        <file>Images/farm.png</file>
+        <file>Images/grandmother.png</file>
+        <file>Images/snake.png</file>
+        <file>Notify.qml</file>
+        <file>Placeholder.qml</file>
+        <file>Egg.qml</file>
+        <file>EggsCreation.js</file>
+    </qresource>
+</RCC>
