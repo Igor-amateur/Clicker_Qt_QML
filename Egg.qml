@@ -9,7 +9,7 @@ Item {
 
     Placeholder {
         id: _placeEgg
-        property bool runningAnimation: true
+        property bool running_Animation: true
         property double scaleAnimation: 0.0
         property int sizeEgg: 50 * scaleAnimation * (parentWidth/640)
 
@@ -35,11 +35,12 @@ Item {
 
             }
             onRunningChanged: {
-                if (runningAnimation) {
-                    console.log("Destroying...")
-                    animation: false
-                    _placeEgg.destroy();
-                }
+               if (running_Animation) {
+                console.log("Destroying...")
+                animation: false
+                _placeEgg.destroy();
+            }
+
             }//https://runebook.dev/ru/docs/qt/qtqml-javascript-dynamicobjectcreation
         }
 
@@ -54,7 +55,7 @@ Item {
             from: 0
             to: 720
             duration: mWorldTime
-            running: true
+        //    running: true
             easing.type: Easing.OutInCubic
         }
         NumberAnimation {
@@ -62,7 +63,7 @@ Item {
             property: "y"
             from: start_y
             to: 0
-            running: true
+         //   running: true
             duration: mWorldTime
         }
         NumberAnimation {
@@ -70,7 +71,7 @@ Item {
             property: "x"
             from: start_x
             to: start_x
-            running: true
+          //  running: true
             duration: mWorldTime
         }
     }
