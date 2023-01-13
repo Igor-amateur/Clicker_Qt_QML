@@ -15,6 +15,12 @@ Window {
         main_count: gamerCount
     }
 
+    Counter{
+        id: _count_2
+        property int gamerCount: 0
+        main_count: gamerCount
+    }
+
     Background{
         id: _background
         anchors.fill: parent
@@ -26,19 +32,23 @@ Window {
                 id: _leftCol
                 width: parent.width * 0.5
                 height: _mainwindow.height
-                anchors.margins: 10
+                anchors.margins:0
+
                 Notify {
                     id: _showresult
                     target: _rotation
                     property alias aliasCount: _count.gamerCount
                     aliasCount: displayCount
+                    displayCount_2: _count_2.gamerCount
                     width: parent.width * 0.7
-                    height: parent.height * 0.2
+                    height: parent.height * 0.3
                     x: parent.width * 0.1
-                    y: parent.height * 0.05
+                    y: parent.width * 04
                     fontPixelSize: _mainwindow.width*0.07
-                    anchors.bottom: _clicker.top
-                    anchors.bottomMargin: _mainwindow.height*0.2
+                    anchors{
+                        top: parent.top
+                        horizontalCenter: parent.horizontalCenter
+                    }
                 }
 
                 Clicker{
@@ -48,19 +58,18 @@ Window {
                     height: parent.width * 0.7
                     x: parent.width * 0.1
                     y: parent.height * 0.4
+                //    anchors.top: _showresult.bottom
 
                 }
-           /*     Egg{
-                    id: _rotation
-                    x: _clicker.x + _clicker.width *0.5
-                    y: _clicker.y + _clicker.width
-                }*/
+
             }
 
             Column{
                 id: _container2
+                anchors.left: _leftCol.right
                 width: parent.width * 0.5
                 height: _mainwindow.height
+                anchors.margins: 10
                 Text {
                     id: _storeText
                     text: qsTr("Store")
@@ -79,10 +88,10 @@ Window {
 
                 ListView{
                     id: _view
-                    width: parent.width-20
+                    width: parent.width-10
                     anchors.top: _storeText.bottom
                     anchors.bottom: parent.bottom
-                    anchors.right: parent.right
+
                     anchors.margins: 10
                     spacing: 10
                     visible: true
@@ -97,6 +106,9 @@ Window {
                         counter: count
                         selfPrice: price
                         main_counter: _count.gamerCount
+                        borderColor: "#2B490B"
+                        borderWidth: 5
+                        aLLmargins: _mainwindow.width * marginsCoef
                     }
 
                 }
@@ -108,28 +120,30 @@ Window {
 
         ListElement{
             property string source: "/Images/clickhand.png"
-            property double coefficient: 0.2
+            property double coefficient: 0.5
             property int count: 1
+            property int count_2: 0
             property int price: 10
+            property double marginsCoef: 0.05
         }
 
         ListElement{
             property string source: "/Images/grandmother.png"
-            property double coefficient: 0.6
+            property double coefficient: 0.5
             property int count: 50
             property int price: 500
+            property int count_2: 0
+            property double marginsCoef: 0.03
         }
 
         ListElement{
             property string source: "/Images/farm.png"
-            property double coefficient: 0.85
+            property double coefficient: 0.5
             property int count: 1000
             property int price: 10000
+            property int count_2: 0
+            property double marginsCoef: 0
         }
     }
-
-
-
-
 }
 
