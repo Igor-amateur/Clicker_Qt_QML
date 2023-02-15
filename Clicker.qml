@@ -2,6 +2,7 @@ import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtGraphicalEffects 1.0
 import Counter 1. 0
+import QtQml 2. 0
 
 Placeholder {
     id: _root
@@ -9,6 +10,7 @@ Placeholder {
     property alias aLLmargins: _snake.aLLmargins
     property int main_counter: 0
     property int counter: 1
+    property int amplify: 0
     property int mult: 0
     property Notify target: null
     property int selfPrice: 0
@@ -28,23 +30,28 @@ Placeholder {
         source: "/Images/snake.png"
 
         property Notify target: _root.target
-        signal send(int value)
+        signal send(int val_0, int val_1)
         onTargetChanged: send.connect(target.receive_2)
+
 
         MouseArea{
             anchors.fill: parent
 
+
             onClicked: {
                 if(0 == _root.selfPrice)
                 {
-                    _root.send(_root.counter)
+                    _root.send(_root.counter+_root.counter*_root.amplify*0.01)
                 }
                 else if(_root.main_counter >= _root.selfPrice)
                 {
                     timeTrigger = true;
                     _root.send(-1 * selfPrice)
                     _root.mult += 1
-                    _snake.send(_root.counter)
+                    if(_root.counter == 0)
+                    _snake.send(_root.counter, _root.amplify)
+                    else
+                     _snake.send(_root.counter, 0)
                 }
             }
         }
@@ -112,14 +119,10 @@ Placeholder {
 
     }
 
-    function rereceive(value){
-        _root.gamersSum = value
-    }
-
     Timer {
         interval: 1000
-        running: timeTrigger
-        repeat: timeTrigger
-        onTriggered: _root.send(_root.counter * _root.mult)
+        running: _root.counter != 0 ? timeTrigger : false
+        repeat: _root.counter != 0 ? timeTrigger : false
+        onTriggered: _root.send(_root.counter * _root.mult +(_root.counter * _root.mult*_root.amplify)*0.01)
     }
 }

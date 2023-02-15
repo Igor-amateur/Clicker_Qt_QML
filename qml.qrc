@@ -12,5 +12,10 @@
         <file>Placeholder.qml</file>
         <file>Egg.qml</file>
         <file>EggsCreation.js</file>
+        <file>Images/amplifiers/10_percent.png</file>
+        <file>Images/amplifiers/20_percent.png</file>
+        <file>Images/amplifiers/30_percent.png</file>
+        <file>Images/amplifiers/50_percent.png</file>
+        <file>Images/amplifiers/70_percent.png</file>
     </qresource>
 </RCC>

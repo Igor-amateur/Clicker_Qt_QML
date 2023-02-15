@@ -9,21 +9,7 @@
 #include <QQmlEngine>
 #include <QAbstractItemModel>
 #include "counter.h"
-/*
 
-
-
-    Person person = Person{};
-
-
-
-    //qRegisterMetaType<QVector<unsigned int>>();
-    qmlRegisterType<ContactList>("ContactList", 1, 0, "ContactList");
-    qmlRegisterType<Person>("Person", 1, 0, "Person");
-    engine.rootContext()->setContextProperty(QStringLiteral("contact"), &contact );
-    engine.rootContext()->setContextProperty(QStringLiteral("person"), &person );
-
-*/
 
 int main(int argc, char *argv[])
 {
