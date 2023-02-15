@@ -8,6 +8,8 @@ Window {
     height: 480
     visible: true
     title: qsTr("Hello World")
+    property bool storeBut_1_Active: true
+    property bool storeBut_2_Active: false
 
     Counter{
         id: _count
@@ -17,6 +19,12 @@ Window {
 
     Counter{
         id: _count_2
+        property int gamerCount: 0
+        main_count: gamerCount
+    }
+
+    Counter{
+        id: _amplify
         property int gamerCount: 0
         main_count: gamerCount
     }
@@ -37,11 +45,18 @@ Window {
                 Notify {
                     id: _showresult
                     target: _rotation
+                    //
                     property alias aliasCount: _count.gamerCount
                     aliasCount: displayCount
+                    //
+
                     displayCount_2: _count_2.gamerCount
+                    //
+                    property alias aliasAmplify: _amplify.gamerCount
+                    aliasAmplify: displayAmplify
+                    //
                     width: parent.width * 0.7
-                    height: parent.height * 0.3
+                    height: parent.width * 0.6
                     x: parent.width * 0.1
                     y: parent.width * 04
                     fontPixelSize: _mainwindow.width*0.07
@@ -58,7 +73,9 @@ Window {
                     height: parent.width * 0.7
                     x: parent.width * 0.1
                     y: parent.height * 0.4
-                //    anchors.top: _showresult.bottom
+                    anchors.top: _showresult.bottom
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.margins: parent.width * 0.1
 
                 }
 
@@ -85,20 +102,77 @@ Window {
                     font.italic: true
                     color: "white"
                 }
+                Row{
+                    id: _storeButtons
+                    anchors.top: _storeText.bottom
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    width: parent.width
+                    height: parent.width*0.1
+                    Rectangle{//"#2B490B" "#EDED75"  "#78BD40"
+                        id: _leftButton
+                        anchors.left: _storeButtons.left
+                        width: _storeButtons.width*0.5
+                        height: _storeButtons.width*0.1
+                        color: storeBut_1_Active ? "#2B490B" : "transparent"
+                        border.color: storeBut_1_Active ? "#78BD40" : "#ffffff"
+                        border.width: storeBut_1_Active ? 3 : 1
+                        Text {
+                            id: _type_1
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: qsTr("suppliers")
+                            font.pixelSize:  parent.width*0.1
+                            color: storeBut_1_Active ? "#EDED75" : "#ffffff"
+                        }
+                        MouseArea{
+                            anchors.fill: parent
+                            onClicked: {
+                                storeBut_1_Active = true
+                                storeBut_2_Active = false
+                            }
+                        }
+                    }
+                    Rectangle{
+                        id: _rightButton
+                        anchors.left: _leftButton.right
+                        anchors.right: _storeButtons.right
+                        width: _storeButtons.width*0.5
+                        height: _storeButtons.width*0.1
+                        color: storeBut_1_Active ? "transparent" : "#2B490B"
+                        border.color: storeBut_1_Active ? "#ffffff" : "#78BD40"
+                        border.width: storeBut_1_Active ? 1 : 3
+                        Text {
+                            id: _type_2
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: qsTr("amplifiers")
+                            font.pixelSize:  parent.width*0.1
+                            color: storeBut_1_Active ? "#ffffff" : "#EDED75"
+
+                        }
+                        MouseArea{
+                            anchors.fill: parent
+                            onClicked: {
+                                storeBut_1_Active = false
+                                storeBut_2_Active = true
+                            }
+                        }
+                    }
+                }
 
                 ListView{
-                    id: _view
+                    id: _view_1
                     width: parent.width-10
-                    anchors.top: _storeText.bottom
+                    anchors.top: _storeButtons.bottom
                     anchors.bottom: parent.bottom
-
                     anchors.margins: 10
                     spacing: 10
-                    visible: true
-                    model: _mod
+                    model: _mod_1
                     clip: true
-
+                    visible: storeBut_1_Active
                     delegate: Clicker {
+                        anchors.horizontalCenter: parent.horizontalCenter
                         target: _showresult
                         width: parent.width * coefficient
                         height: parent.width * coefficient
@@ -109,14 +183,41 @@ Window {
                         borderColor: "#2B490B"
                         borderWidth: 5
                         aLLmargins: _mainwindow.width * marginsCoef
+                        amplify: _amplify.gamerCount
                     }
+                }
 
+                ListView{
+                    id: _view_2
+                    width: parent.width-10
+                    anchors.top: _storeButtons.bottom
+                    anchors.bottom: parent.bottom
+                    anchors.margins: 10
+                    spacing: 10
+                    model: _mod_2
+                    clip: true
+                    visible: storeBut_2_Active
+                    delegate: Clicker {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        target: _showresult
+                        width: parent.width * coefficient
+                        height: parent.width * coefficient
+                        displaySource: source
+                        counter: count
+                        selfPrice: price
+                        main_counter: _count.gamerCount
+                        amplify: model.amplify
+                        borderColor: "#2B490B"
+                        borderWidth: 5
+                        aLLmargins: _mainwindow.width * marginsCoef
+                    }
                 }
             }
         }
     }
+
     ListModel{
-        id: _mod
+        id: _mod_1
 
         ListElement{
             property string source: "/Images/clickhand.png"
@@ -145,5 +246,58 @@ Window {
             property double marginsCoef: 0
         }
     }
+
+
+    ListModel{
+        id: _mod_2
+
+        ListElement{
+            property string source: "/Images/amplifiers/10_percent.png"
+            property double coefficient: 0.5
+            property int count: 0
+            property int count_2: 0
+            property int amplify: 10
+            property int price: 300
+            property double marginsCoef: 0.05
+        }
+        ListElement{
+            property string source: "/Images/amplifiers/20_percent.png"
+            property double coefficient: 0.5
+            property int count: 0
+            property int count_2: 0
+            property int amplify: 20
+            property int price: 500
+            property double marginsCoef: 0.05
+        }
+        ListElement{
+            property string source: "/Images/amplifiers/30_percent.png"
+            property double coefficient: 0.5
+            property int count: 0
+            property int count_2: 0
+            property int amplify: 30
+            property int price: 700
+            property double marginsCoef: 0.05
+        }
+        ListElement{
+            property string source: "/Images/amplifiers/50_percent.png"
+            property double coefficient: 0.5
+            property int count: 0
+            property int count_2: 0
+            property int amplify: 50
+            property int price: 1100
+            property double marginsCoef: 0.05
+        }
+        ListElement{
+            property string source: "/Images/amplifiers/70_percent.png"
+            property double coefficient: 0.5
+            property int count: 0
+            property int count_2: 0
+            property int amplify: 70
+            property int price: 1500
+            property double marginsCoef: 0.05
+        }
+
+    }
+
 }
 
